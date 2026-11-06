@@ -1,0 +1,872 @@
+---
+lang: pt-BR
+format: 
+  pdf:
+    documentclass: article
+    papersize: a4
+    toc: false # O sumário será gerado manualmente na ordem certa
+    number-sections: true
+    colorlinks: false
+    geometry:
+      - top=3cm
+      - left=3cm
+      - right=2cm
+      - bottom=2cm
+    include-in-header:
+      text: |
+        \usepackage{etoolbox}
+        % Força a centralização do título da TOC nativa
+        \patchcmd{\tableofcontents}{\section*}{\section*\centering}{}{}
+        
+        \usepackage{fancyhdr}
+        \pagestyle{fancy}
+        \fancyhf{} % Limpa cabeçalhos e rodapés existentes
+        
+        % Configuração das Linhas (espessura de 0.4pt)
+        \renewcommand{\headrulewidth}{0.4pt}
+        \renewcommand{\footrulewidth}{0.4pt}
+        
+        % Cabeçalho (Topo)
+        \fancyhead[L]{\small \textsf{DETRAN-PA}}
+        \fancyhead[R]{\small \textsf{Relatório Técnico}}
+        
+        % Rodapé (Fim da página)
+        \fancyfoot[L]{\small \textsf{Belém-2026}}
+        \fancyfoot[R]{\small \textsf{Página \thepage}} 
+execute:
+  echo: false    # Esconde os códigos R no PDF final
+  warning: false # Oculta avisos do R
+  message: false # Oculta mensagens do R
+---
+
+
+
+
+```{=latex}
+% ==========================================
+% 1. CAPA
+% ==========================================
+\begin{titlepage}
+\begin{center}
+
+
+\vspace*{-2cm}
+\includegraphics[width=3.5cm]{brasao.png} \\[0.5cm]
+
+\textbf{\Large GOVERNO DO ESTADO DO PARÁ} \\
+\textbf{\Large DEPARTAMENTO DE TRÂNSITO DO ESTADO DO PARÁ}\\
+\textbf{\Large COMISSÃO DE SUSTENTABILIDADE AMBIENTAL}\\
+\textbf{\large (Portaria nº 2834/2025-DG/DETRAN-PA)}\\[6cm]
+
+
+\textbf{\LARGE Relatório Técnico: Perfil De Mobilidade Dos Servidores da Autarquia de Trânsito}\\
+
+
+\vfill
+\textbf{BELÉM}\\
+\textbf{2026}
+\end{center}
+\end{titlepage}
+
+
+% ==========================================
+% 2. CONTRA-CAPA (Diretoria e Equipe Técnica)
+% ==========================================
+\newpage
+\thispagestyle{empty}
+\begin{center}
+\textbf{\large DEPARTAMENTO DE TRÂNSITO DO ESTADO DO PARÁ} \\[1.5cm]
+
+\textbf{\normalsize RENATA MIRELLA FREITAS GUIMARAES DE SOUSA COELHO} \\
+(Diretoria Geral) \\[0.4cm]
+
+\textbf{\normalsize ANA CAROLINA MACHADO SAMPAIO} \\
+(Diretoria de Habilitação de Condutores e Registro de Veículos) \\[0.4cm]
+
+\textbf{\normalsize JOSÉ BENTO GOUVEIA JUNIOR} \\
+(Diretoria Técnica e Operacional) \\[0.4cm]
+
+\textbf{\normalsize PRICILA KAREN MUCELIN CHAVES} \\
+(Diretoria de Tecnologia e Informática) \\[0.4cm]
+
+\textbf{\normalsize ARLEY COSTA GONÇALVES} \\
+(Diretoria Administrativo e Financeira) \\[0.4cm]
+
+\textbf{\normalsize RODRIGO GONDIM DA SERRA} \\
+(Procuradoria Jurídica) \\[0.4cm]
+
+\textbf{\normalsize HELENO MASCARENHAS D’OLIVEIRA} \\
+(Corregedoria) \\[0.4cm]
+ 
+\textbf{\normalsize MÁRIO ANDRÉ DA SILVA SANTIAGO} \\
+(Coordenadoria do Núcleo das Ciretran's) \\[0.4cm]
+ 
+\textbf{\normalsize ANAUGUSTA BERGER GARCIA MENDONÇA} \\
+(Coordenadoria do Núcleo de Planejamento) \\[0.4cm]
+ 
+\textbf{\normalsize CRISTIANI SOUSA DO ROSÁRIO} \\
+(ASDECOM) \\[1.2cm]
+
+\textbf{\large ---------------- Equipe Técnica ---------------} \\[0.5cm]
+\textbf{\normalsize Michelle de Oliveira Borges}         (Presidente) \\
+\textbf{\normalsize Mauricélia Silva Rodrigues Carvalho} (Membro) \\
+\textbf{\normalsize Irandir de Castro Diniz}             (Membro) \\
+\textbf{\normalsize Vera Conceição Rebelo Brasil}        (Membro) \\
+\textbf{\normalsize Maria Odete de Lima Teixeira}        (Membro) \\
+\textbf{\normalsize Patrícia Regina Leotty da Cunha}     (Membro) \\
+\textbf{\normalsize Arlei Costa Gonçalves}               (Membro) \\
+\textbf{\normalsize Angélica Souza Miranda}              (Membro) \\
+\textbf{\normalsize Renato Alves de Mendonça}            (Membro) \\
+\textbf{\normalsize Mauro Alexandre dos Santos Souza}    (Membro) \\
+\textbf{\normalsize Victor Johnathan de Souza Oliveira}  (Membro) \\
+\textbf{\large ----------------------------------------------------} \\[0.5cm]
+\end{center}
+
+
+
+% ==========================================
+% 3. SUMÁRIO
+% ==========================================
+\newpage
+\renewcommand{\contentsname}{\hfill\textbf{\Large SUMÁRIO}\hfill}
+
+
+\tableofcontents
+
+% ==========================================
+% 4. LISTA DE TABELAS
+% ==========================================
+\newpage
+\renewcommand{\listtablename}{LISTA DE TABELAS}
+\listoftables
+\addcontentsline{toc}{section}{LISTA DE TABELAS}
+\newpage
+```
+
+
+
+
+
+
+# **Resumo Executivo** {.unnumbered .unlisted}
+
+A presente pesquisa tem como objetivo analisar o perfil sociodemográfico, a infraestrutura de comunicação e, primordialmente, os padrões de deslocamento pendular ("casa x trabalho x casa") dos servidores ativos do Departamento de Trânsito do Estado do Pará (DETRAN-PA). Este levantamento visa subsidiar a formulação e a implementação do Plano de Logística Sustentável institucional, em estrita conformidade com as diretrizes do Ofício Circular nº 04/2026 DG/DETRAN-PA. 
+
+A metodologia adotou a coleta de dados primários via questionário estruturado eletrônico, aplicado sob os preceitos de anonimização e agregação da Lei Geral de Proteção de Dados Pessoais (LGPD). O instrumento contemplou variáveis cruciais como o modal de transporte principal, matriz energética (tipo de combustível), bairro de residência, além de características demográficas e de acesso à internet. A análise de dados foi conduzida em ambiente reprodutível (R/Quarto), garantindo a automação do relatório técnico e a viabilidade de atualizações contínuas do perfil institucional. 
+
+Espera-se que este diagnóstico inédito forneça o embasamento estatístico necessário para o cálculo do Inventário de Emissões de Gases de Efeito Estufa (GEE) do órgão e guie a tomada de decisão gerencial na promoção de modais ativos, adoção de ferramentas digitais sustentáveis (paperless) e incentivo a programas de carona solidária.
+
+**Palavras-chave**: Logística Sustentável; Deslocamento Pendular; Emissões de GEE; Ciência de Dados; DETRAN-PA.
+\newpage
+
+
+
+
+
+
+
+
+
+\newpage
+# **INTRODUÇÃO**
+
+A mobilidade urbana sustentável consolidou-se como um dos principais desafios das administrações públicas contemporâneas. Segundo Banister (2008), o paradigma da mobilidade sustentável exige uma mudança de foco: da otimização do fluxo de veículos para a acessibilidade das pessoas, priorizando modais ativos e coletivos em detrimento do uso individual do automóvel. Neste contexto, as organizações governamentais assumem um papel duplo: o de formuladores de políticas públicas e o de grandes polos geradores de viagens (Vasconcellos, 2012).
+
+O presente relatório técnico tem como objetivo analisar o perfil de mobilidade e os padrões de deslocamento pendular ("casa x trabalho x casa") dos servidores do Departamento de Trânsito do Estado do Pará (DETRAN-PA). Este diagnóstico visa subsidiar a implementação do Plano de Logística Sustentável (PLS) do órgão, focado na mitigação dos impactos ambientais decorrentes das rotinas de trabalho. Como aponta Litman (2022), a gestão da demanda por transporte (Transportation Demand Management – TDM) em âmbito corporativo constitui uma das ferramentas mais eficazes para reduzir emissões de Gases de Efeito Estufa (GEE) e aprimorar a qualidade de vida dos colaboradores.
+
+A adoção do Plano de Logística Sustentável em órgãos públicos tem sido amplamente documentada na literatura como um instrumento transformador da gestão pública. Autores como Guimarães et al. (2018), ao analisarem a implementação do PLS em instituições públicas e autarquias, destacam que a ferramenta transcende o mero cumprimento normativo, atuando como um vetor de eficiência do gasto público e de consolidação da cultura de sustentabilidade. Na mesma linha, Costa e Santos (2020) evidenciam casos de sucesso no Poder Judiciário e no Executivo, nos quais a estruturação de um PLS embasado em dados reais de mobilidade e consumo resultou em reduções expressivas da pegada de carbono institucional. Mais recentemente, Oliveira e Silva (2023) reforçaram que o êxito dessas iniciativas na administração direta e indireta depende intrinsecamente de diagnósticos prévios e precisos sobre o comportamento dos servidores, justificando a relevância metodológica desta pesquisa.
+
+O diagnóstico atende, ainda, à necessidade de alinhar o DETRAN-PA às diretrizes da Agenda Ambiental na Administração Pública (A3P), promovida pelo Ministério do Meio Ambiente e Mudança do Clima, que visa à adoção de práticas sustentáveis e à promoção de uma cultura organizacional consciente.
+
+Ademais, esta ação institucional encontra-se em estrita conformidade com a Portaria nº 2834/2025 DG/DETRAN-PA, emitida em 29 de julho de 2025, a qual estabelece diretrizes estratégicas para o levantamento de dados voltados à sustentabilidade e à transição ecológica na administração pública estadual, definindo as atribuições institucionais da comissão responsável:
+
+**Art. 3º Compete à Comissão Ambiental**:
+
+1. Promover ações e campanhas de sensibilização ambiental entre os servidores;
+2. Propor e acompanhar práticas sustentáveis no uso de recursos como água, energia, papel e resíduos;
+3. Estimular a adoção de compras e contratações sustentáveis;
+4. Apoiar o planejamento e o monitoramento de metas ambientais institucionais;
+5. Contribuir para o alinhamento do órgão com políticas públicas e normativas ambientais vigentes;
+6. Promover a adesão efetiva do DETRAN-PA à Agenda Ambiental na Administração Pública (A3P).
+
+
+
+
+\newpage
+# **TRABALHOS RELACIONADOS**
+
+A elaboração de Planos de Logística Sustentável (PLS) embasados em diagnósticos de mobilidade corporativa tem ganhado expressividade no setor público brasileiro, impulsionada por normativas ambientais e metas de descarbonização. 
+
+Estudos como o de Silva et al. (2019) analisaram o deslocamento de servidores em instituições federais de ensino superior, demonstrando que a alta dependência de veículos motorizados individuais está diretamente correlacionada à dispersão urbana e à insuficiência da malha de transporte público. Em consonância, Carvalho e Santos (2021) aplicaram questionários a servidores do judiciário para mapear as emissões de GEE de escopo 3 (deslocamento pendular), revelando que o incentivo ao teletrabalho e a adoção de plataformas de carona solidária institucional resultaram em quedas significativas na pegada de carbono organizacional.
+
+A presente pesquisa alinha-se a estas iniciativas ao adotar uma abordagem metodológica baseada em ciência de dados (R/Quarto) para o levantamento do perfil socioespacial. No entanto, diferencia-se ao aplicar este arcabouço num órgão executivo de trânsito (DETRAN-PA), onde o próprio objeto de atuação da autarquia (a mobilidade e o trânsito) torna o exemplo institucional internamente ainda mais premente (Gomes, 2023).
+
+
+
+
+
+
+# **MATERIAL E MÉTODOS**
+
+## Delineamento da Pesquisa e Coleta de Dados
+Trata-se de uma pesquisa de natureza quantitativa e caráter exploratório-descritivo. A coleta de dados primários foi realizada por meio de um questionário semiestruturado eletrônico, composto por 14 questões, desenvolvido na plataforma *Google Forms* (acessível via link institucional). 
+
+A mobilização da amostra ocorreu de forma estratégica por meio de divulgação interna via e-mail corporativo para o quadro de servidores do Departamento de Trânsito do Estado do Pará (DETRAN-PA). A estratégia de engajamento e aplicação do instrumento foi conduzida de maneira articulada entre a Coordenadoria de Gestão de Pessoas e a Comissão de Sustentabilidade do órgão.
+
+## Considerações Éticas e Proteção de Dados (LGPD)
+Em estrita conformidade com as diretrizes estabelecidas pela Lei Geral de Proteção de Dados Pessoais (LGPD - Lei nº 13.709/2018), os participantes foram devidamente informados sobre a finalidade da pesquisa. Assegurou-se que todos os dados sensíveis e pessoais coletados (como ano de nascimento, bairro e escolaridade) não seriam, sob nenhuma hipótese, divulgados individualmente. 
+
+As informações foram tratadas exclusivamente de forma agregada e anonimizada para fins estatísticos. O banco de dados final tem uso restrito e destina-se unicamente ao cálculo do Inventário de Emissões de Gases de Efeito Estufa (GEE) do órgão e à atualização do perfil socioeconômico institucional, garantindo-se o sigilo absoluto da identidade dos respondentes.
+
+
+
+## Processamento e Análise Estatística
+
+A análise de dados foi conduzida de forma integralmente reprodutível e automatizada, utilizando a linguagem de programação estatística **R** associada ao sistema de publicações dinâmicas **Quarto**, mitigando erros operacionais e otimizando o fluxo de trabalho.
+
+A abordagem analítica foi estruturada em duas etapas:
+
+1. **Análise Univariada de Dados:** Aplicação de estatística descritiva (frequências absolutas e relativas) sintetizada em tabelas de contingência padronizadas, visando traçar o panorama inicial da mobilidade e do perfil socioeconômico da amostra.
+2. **Análise Bivariada de Dados:** Para aprofundamento das relações entre as variáveis, previu-se a utilização de tabelas de contingência (crosstabs), visando identificar as distribuições proporcionais entre o perfil sociodemográfico e funcional (renda, escolaridade, jornada) e a escolha do modal de transporte, sem assumir a priori dependência probabilística restrita.
+
+
+
+
+```{r setup-dados}
+# Carregamento dos pacotes
+library(tidyverse)
+library(readxl)
+library(knitr)
+library(kableExtra)
+library(janitor)
+library(scales)
+library(gtsummary)
+library(lubridate) 
+
+# Configura o idioma do gtsummary para Português
+theme_gtsummary_language(language = "pt", decimal.mark = ",", big.mark = ".")
+
+# Leitura e padronização dos nomes das colunas
+dados <- read_excel("Datset_Sustentabilidade.xlsx") %>%
+  clean_names()
+```
+
+
+
+
+\newpage
+# **RESULTADOS**
+## **Análise Univariada de Dados**
+
+A Tabela 1 detalha as características sociodemográficas dos servidores respondentes, estratificando por gênero, estado civil, autodeclaração de cor/raça e nível de escolaridade. As variáveis são ordenadas com base na frequência absoluta (N) e percentual (%).
+
+
+```{r}
+#| tbl-cap: "Características Sociodemográfico dos Servidores do DETRAN-PA"
+
+library(lubridate) # Pacote para manipular datas e idades
+library(dplyr)
+
+dados %>%
+  # 1. Calcula a idade e cria as 5 faixas etárias
+  mutate(
+    data_nasc = as.Date(data_de_nascimento),
+    idade = trunc((data_nasc %--% Sys.Date()) / years(1)), 
+    faixa_etaria = case_when(
+      idade <= 30 ~ "Até 30 anos",
+      idade >= 31 & idade <= 40 ~ "31 a 40 anos",
+      idade >= 41 & idade <= 50 ~ "41 a 50 anos",
+      idade >= 51 & idade <= 60 ~ "51 a 60 anos",
+      idade > 60 ~ "Mais de 60 anos"
+    )
+  ) %>%
+  select(genero, 
+         faixa_etaria, 
+         estado_civil, 
+         cor_raca, 
+         escolaridade) %>%
+  mutate(across(everything(), ~replace_na(as.character(.), "Não informado"))) %>%
+  # 2. Força a ordem cronológica da Faixa Etária (Transformando em fator)
+  mutate(
+    faixa_etaria = factor(faixa_etaria, levels = c("Até 30 anos", 
+                                                   "31 a 40 anos", 
+                                                   "41 a 50 anos", 
+                                                   "51 a 60 anos", 
+                                                   "Mais de 60 anos"))
+  ) %>%
+  tbl_summary(
+    statistic = list(all_categorical() ~ "{n} ({p}%)"),
+    label = list(
+      genero ~ "Gênero",
+      faixa_etaria ~ "Faixa Etária",
+      estado_civil ~ "Estado Civil",
+      cor_raca ~ "Cor/Raça",
+      escolaridade ~ "Nível de Escolaridade"
+    ),
+    missing_text = "Sem resposta",
+    # 3. Aplica a ordenação por frequência APENAS nas outras variáveis
+    sort = list(c(genero, 
+                  estado_civil, 
+                  cor_raca, 
+                  escolaridade) ~ "frequency") 
+  ) %>%
+  modify_header(label = "**CARACTERÍSTICAS**") %>%
+  bold_labels() %>%
+  as_kable_extra(booktabs = TRUE, linesep = "", longtable = FALSE) %>%
+  # 4. Reduz a fonte para 10 para compactar a tabela no PDF
+  kable_styling(latex_options = c("striped", "HOLD_position"), 
+                full_width = FALSE, 
+                position = "center", 
+                font_size = 11)
+```
+
+
+
+
+
+```{r calculos-sociodemograficos, include=FALSE}
+# ==========================================
+# CÁLCULOS PARA O TEXTO PARAMETRIZADO - SÓCIODEMOGRÁFICO
+# ==========================================
+
+# (Os dados originais precisam receber a coluna de faixa etária para o cálculo)
+dados_idade <- dados %>%
+  mutate(
+    data_nasc = as.Date(data_de_nascimento),
+    idade = trunc((data_nasc %--% Sys.Date()) / years(1)),
+    faixa_etaria = case_when(
+      idade <= 30 ~ "Até 30 anos",
+      idade >= 31 & idade <= 40 ~ "31 a 40 anos",
+      idade >= 41 & idade <= 50 ~ "41 a 50 anos",
+      idade >= 51 & idade <= 60 ~ "51 a 60 anos",
+      idade > 60 ~ "Mais de 60 anos",
+      TRUE ~ "Não informado"
+    )
+  )
+
+# 1. Gênero
+resumo_genero <- dados_idade %>% count(genero) %>% mutate(perc = n / sum(n) * 100) %>% arrange(desc(n))
+top_genero_nome <- str_to_lower(resumo_genero$genero[1]) 
+top_genero_n <- resumo_genero$n[1]
+top_genero_perc <- round(resumo_genero$perc[1], 1)
+
+# 2. Faixa Etária (NOVO)
+resumo_idade <- dados_idade %>% count(faixa_etaria) %>% mutate(perc = n / sum(n) * 100) %>% arrange(desc(n))
+top_idade_nome <- resumo_idade$faixa_etaria[1]
+top_idade_perc <- round(resumo_idade$perc[1], 1)
+
+# 3. Estado Civil
+resumo_est_civil <- dados_idade %>% count(estado_civil) %>% mutate(perc = n / sum(n) * 100) %>% arrange(desc(n))
+top_est_civil_nome <- str_to_lower(resumo_est_civil$estado_civil[1])
+top_est_civil_perc <- round(resumo_est_civil$perc[1], 1)
+
+# 4. Cor/Raça
+resumo_raca <- dados_idade %>% count(cor_raca) %>% mutate(perc = n / sum(n) * 100) %>% arrange(desc(n))
+top_raca_nome <- resumo_raca$cor_raca[1]
+top_raca_perc <- round(resumo_raca$perc[1], 1)
+
+# 5. Escolaridade
+resumo_esc <- dados_idade %>% count(escolaridade) %>% mutate(perc = n / sum(n) * 100) %>% arrange(desc(n))
+top_esc_nome <- resumo_esc$escolaridade[1]
+top_esc_perc <- round(resumo_esc$perc[1], 1)
+```
+
+
+
+A caracterização da amostra revela aspectos fundamentais sobre a força de trabalho atual da instituição. Do ponto de vista de género, a maior parcela dos respondentes identifica-se com o género **`r top_genero_nome`**, representando **`r top_genero_perc`%** (n = `r top_genero_n`) do total. Em termos geracionais, o quadro de servidores concentra-se predominantemente na faixa etária de **`r top_idade_nome`** (**`r top_idade_perc`%**). 
+
+Quanto à estrutura familiar e estado civil, há prevalência de servidores declarados como **`r top_est_civil_nome`** (**`r top_est_civil_perc`%**). No quesito de autodeclaração de cor ou raça, o grupo mais expressivo é o de cor/raça **`r top_raca_nome`** (**`r top_raca_perc`%**). Por fim, ao analisar o nível de instrução, evidencia-se um quadro funcional com alta qualificação académica, onde a categoria de maior frequência corresponde a profissionais com **`r top_esc_nome`** (**`r top_esc_perc`%**). 
+
+Compreender o perfil deste público interno, mapeando a sua distribuição etária e educacional, é um balizador estratégico para alinhar a comunicação e as campanhas educativas previstas no Plano de Logística Sustentável do DETRAN-PA.
+
+
+
+\newpage
+A Tabela 2 apresenta a distribuição geográfica dos servidores, destacando os 10 principais municípios e bairros de residência, evidenciando as áreas de maior concentração.
+
+
+
+```{r tabela-geografica}
+#| tbl-cap: "Características Geográfica dos Servidores do DETRAN-PA"
+
+dados %>%
+  select(municipio, 
+         bairro) %>%
+  mutate(across(everything(), ~replace_na(as.character(.), "Não informado"))) %>%
+  mutate(
+    # Para o município, forçamos o corte: só ganha linha se tiver 2 ou mais pessoas. O resto vira "Outros"
+    municipio = fct_lump_min(municipio, min = 2, other_level = "Outros"),
+    # Para o bairro, como não há empate no final, o lump_n funciona perfeitamente
+    bairro = fct_lump_n(bairro, n = 7, other_level = "Outros")
+  ) %>%
+  tbl_summary(
+    statistic = list(all_categorical() ~ "{n} ({p}%)"),
+    label = list(
+      municipio ~ "Município",
+      bairro ~ "Bairro de Residência"
+    ),
+    sort = list(all_categorical() ~ "frequency") 
+  ) %>%
+  modify_header(label = "**LOCALIDADE**") %>%
+  bold_labels() %>%
+  as_kable_extra(booktabs = TRUE, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "HOLD_position"), full_width = FALSE, position = "center", font_size = 11)
+```
+
+
+
+
+
+
+
+```{r calculos-geografia, include=FALSE}
+# ==========================================
+# CÁLCULOS PARA O TEXTO PARAMETRIZADO - GEOGRAFIA
+# ==========================================
+
+# 1. Calculando o Top Município
+resumo_mun <- dados %>%
+  select(municipio) %>%
+  filter(!is.na(municipio), municipio != "Não informado") %>%
+  count(municipio) %>%
+  mutate(perc = n / sum(n) * 100) %>%
+  arrange(desc(n))
+
+top_mun_nome <- resumo_mun$municipio[1]
+top_mun_n <- resumo_mun$n[1]
+top_mun_perc <- round(resumo_mun$perc[1], 1)
+
+# 2. Calculando o Top Bairro
+resumo_bairro <- dados %>%
+  select(bairro) %>%
+  filter(!is.na(bairro), bairro != "Não informado") %>%
+  count(bairro) %>%
+  mutate(perc = n / sum(n) * 100) %>%
+  arrange(desc(n))
+
+top_bairro_nome <- resumo_bairro$bairro[1]
+top_bairro_n <- resumo_bairro$n[1]
+top_bairro_perc <- round(resumo_bairro$perc[1], 1)
+```
+
+
+
+
+O mapeamento territorial dos servidores ativos revela uma forte concentração demográfica na Região Metropolitana. O município de **`r top_mun_nome`** desponta como o principal pólo gerador de viagens, abrigando **`r top_mun_perc`%** (n = `r top_mun_n`) do corpo funcional do DETRAN-PA. Em uma análise microregional, o bairro **`r top_bairro_nome`** destaca-se como a principal zona de origem dos deslocamentos, concentrando **`r top_bairro_perc`%** (n = `r top_bairro_n`) das residências mapeadas. Este adensamento espacial fornece subsídios precisos para o planejamento logístico, permitindo a otimização de rotas de transporte corporativo e o direcionamento estratégico de campanhas de carona solidária para as áreas de maior densidade de servidores, reduzindo significativamente as emissões agregadas durante os trajetos pendulares.
+
+
+
+
+
+
+
+
+\newpage
+O mapeamento da infraestrutura de comunicação dos servidores é fundamental para o planejamento de campanhas de conscientização do Plano de Logística Sustentável e adoção de ferramentas digitais corporativas. A Tabela 3 sumariza o acesso à internet.
+
+
+```{r}
+#| tbl-cap: "Características de Acesso à Internet (Residencial e Móvel) dos Servidores do DETRAN-PA"
+
+dados %>%
+  select(contains("internet")) %>%
+  rename(
+    `Internet Residencial` = 1,
+    `Internet no Celular (Dados Móveis)` = 2
+  ) %>%
+  mutate(across(everything(), ~replace_na(as.character(.), "Não informado"))) %>%
+  tbl_summary(
+    statistic = list(all_categorical() ~ "{n} ({p}%)"),
+    missing_text = "Sem resposta",
+    sort = list(all_categorical() ~ "frequency") # Garante ordem do maior pro menor
+  ) %>%
+  modify_header(label = "**MEIOS DE COMUNICAÇÃO**") %>%
+  bold_labels() %>%
+  as_kable_extra(booktabs = TRUE, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position"), full_width = FALSE, position = "center", font_size = 11)
+
+```
+
+
+
+
+
+```{r calculos-internet, include=FALSE}
+# ==========================================
+# CÁLCULOS PARA O TEXTO PARAMETRIZADO - INTERNET
+# ==========================================
+
+# 1. Calculando Acesso Residencial ("Internet na sua casa")
+resumo_int_res <- dados %>%
+  select(contains("internet")) %>%
+  select(1) %>% # Pega a primeira coluna (Residencial)
+  rename(resp = 1) %>%
+  filter(!is.na(resp), resp != "Não informado") %>%
+  count(resp) %>%
+  mutate(perc = n / sum(n) * 100) %>%
+  arrange(desc(n))
+
+int_res_resposta <- resumo_int_res$resp[1]
+int_res_n <- resumo_int_res$n[1]
+int_res_perc <- round(resumo_int_res$perc[1], 1)
+
+# 2. Calculando Acesso Móvel ("Internet no seu celular")
+resumo_int_movel <- dados %>%
+  select(contains("internet")) %>%
+  select(2) %>% # Pega a segunda coluna (Móvel)
+  rename(resp = 1) %>%
+  filter(!is.na(resp), resp != "Não informado") %>%
+  count(resp) %>%
+  mutate(perc = n / sum(n) * 100) %>%
+  arrange(desc(n))
+
+int_movel_resposta <- resumo_int_movel$resp[1]
+int_movel_n <- resumo_int_movel$n[1]
+int_movel_perc <- round(resumo_int_movel$perc[1], 1)
+```
+
+
+
+A avaliação do grau de conectividade digital do quadro funcional aponta para uma capilaridade praticamente universal. Os dados evidenciam que **`r int_res_perc`%** (n = `r int_res_n`) dos servidores declararam possuir acesso à internet em suas residências (resposta "**`r int_res_resposta`**"). De forma complementar, o acesso à internet móvel via celular acompanha essa alta taxa de penetração, englobando **`r int_movel_perc`%** (n = `r int_movel_n`) da amostra (resposta "**`r int_movel_resposta`**"). Este cenário de alta digitalização é extremamente favorável ao DETRAN-PA, pois garante viabilidade técnica para a adoção de sistemas de gestão de logística sem papel (paperless), campanhas de conscientização ambiental via e-mail e aplicativos institucionais, essenciais para o êxito do Plano de Logística Sustentável.
+
+
+
+
+
+
+
+\newpage
+Para subsidiar diretamente as metas de redução de emissões de gases de efeito estufa, a Tabela 4 mapeia o perfil modal dos servidores nos deslocamentos pendulares (casa-trabalho) e as matrizes energéticas predominantes de seus veículos.
+
+
+
+```{r}
+#| tbl-cap: "Características de Mobilidade e Uso de Combustível dos Servidores do DETRAN-PA"
+
+dados %>%
+  # Procura dinamicamente por colunas que contenham "transporte" e "combustivel"
+  select(contains("transporte"), contains("combustivel")) %>%
+  rename(
+    `Meio de Transporte Principal` = 1,
+    `Tipo de Combustível Predominante` = 2
+  ) %>%
+  mutate(across(everything(), ~replace_na(as.character(.), "Não informado"))) %>%
+  tbl_summary(
+    statistic = list(all_categorical() ~ "{n} ({p}%)"),
+    missing_text = "Sem resposta",
+    sort = list(all_categorical() ~ "frequency") # Garante ordem decrescente
+  ) %>%
+  modify_header(label = "**MOBILIDADE**") %>%
+  bold_labels() %>%
+  as_kable_extra(booktabs = TRUE, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "hold_position"), full_width = FALSE, position = "center", font_size = 11)
+
+```
+
+
+
+
+
+```{r calculos-texto-dinamico, include=FALSE}
+# ==========================================
+# CÁLCULOS PARA O TEXTO PARAMETRIZADO
+# ==========================================
+
+# 1. Calculando o Top 1 do Meio de Transporte
+resumo_transporte <- dados %>%
+  select(contains("transporte")) %>%
+  rename(transporte = 1) %>%
+  filter(!is.na(transporte), transporte != "Não informado") %>%
+  count(transporte) %>%
+  mutate(perc = n / sum(n) * 100) %>%
+  arrange(desc(n))
+
+top_transporte_nome <- resumo_transporte$transporte[1]
+top_transporte_n <- resumo_transporte$n[1]
+top_transporte_perc <- round(resumo_transporte$perc[1], 1)
+
+# 2. Calculando o Top 1 do Combustível
+resumo_comb <- dados %>%
+  select(contains("combustivel")) %>%
+  rename(combustivel = 1) %>%
+  filter(!is.na(combustivel), combustivel != "Não informado") %>%
+  count(combustivel) %>%
+  mutate(perc = n / sum(n) * 100) %>%
+  arrange(desc(n))
+
+top_comb_nome <- resumo_comb$combustivel[1]
+top_comb_n <- resumo_comb$n[1]
+top_comb_perc <- round(resumo_comb$perc[1], 1)
+```
+
+
+
+
+A análise da matriz de deslocamento pendular dos servidores ("casa x trabalho") revela que o modal mais utilizado pela equipe do DETRAN-PA é o(a) **`r top_transporte_nome`**, representando **`r top_transporte_perc`%** (n = `r top_transporte_n`) do total das viagens diárias reportadas.
+
+
+
+No que tange à matriz energética da frota particular, os dados demonstram uma forte dependência de combustíveis fósseis tradicionais. O uso de **`r top_comb_nome`** é predominante, abastecendo **`r top_comb_perc`%** (n = `r top_comb_n`) dos veículos utilizados pelos servidores. Estes indicadores parametrizados evidenciam a necessidade de políticas de incentivo a modais ativos, compartilhados (caronas solidárias) e à adoção de veículos com menor índice de emissão de Gases de Efeito Estufa (GEE), alinhando-se às diretrizes do Plano de Logística Sustentável.
+
+
+
+
+
+\newpage
+A distribuição administrativa da força de trabalho e os regimes de jornada são indicadores essenciais para direcionar ações setoriais e compreender os fluxos de pico nos deslocamentos. A Tabela a seguir apresenta o mapeamento funcional dos servidores.
+
+
+
+
+```{r}
+#| tbl-cap: "Características por Unidade de Lotação e Carga Horária dos Servidores do DETRAN-PA"
+
+dados %>%
+  # Seleciona a lotação e busca dinamicamente a coluna de carga horária
+  select(lotacao, contains("carga")) %>%
+  rename(
+    `Unidade de Lotação` = 1,
+    `Carga Horária de Trabalho` = 2
+  ) %>%
+  mutate(across(everything(), ~replace_na(as.character(.), "Não informado"))) %>%
+  # Mantém as 10 maiores unidades e agrupa as restantes
+  mutate(`Unidade de Lotação` = fct_lump_n(`Unidade de Lotação`, 
+                                                    n = 10, 
+                                                    other_level = "Outras Unidades")) %>%
+  tbl_summary(
+    statistic = list(all_categorical() ~ "{n} ({p}%)"),
+    missing_text = "Sem resposta",
+    sort = list(all_categorical() ~ "frequency") 
+  ) %>%
+  modify_header(label = "**PERFIL FUNCIONAL**") %>%
+  bold_labels() %>%
+  as_kable_extra(booktabs = TRUE, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "HOLD_position"), full_width = FALSE, position = "center", font_size = 11)
+```
+
+
+
+
+
+```{r calculos-lotacao, include=FALSE}
+# ==========================================
+# CÁLCULOS PARA O TEXTO PARAMETRIZADO - FUNCIONAL
+# ==========================================
+
+# 1. Cálculos de Lotação
+resumo_lotacao <- dados %>%
+  select(lotacao) %>%
+  rename(setor = 1) %>%
+  filter(!is.na(setor), setor != "Não informado") %>%
+  count(setor) %>%
+  mutate(perc = n / sum(n) * 100) %>%
+  arrange(desc(n))
+
+top_lotacao_nome <- resumo_lotacao$setor[1]
+top_lotacao_n <- resumo_lotacao$n[1]
+top_lotacao_perc <- round(resumo_lotacao$perc[1], 1)
+
+# 2. Cálculos de Carga Horária
+resumo_carga <- dados %>%
+  select(contains("carga")) %>%
+  rename(carga = 1) %>%
+  filter(!is.na(carga), carga != "Não informado") %>%
+  count(carga) %>%
+  mutate(perc = n / sum(n) * 100) %>%
+  arrange(desc(n))
+
+top_carga_nome <- resumo_carga$carga[1]
+top_carga_n <- resumo_carga$n[1]
+top_carga_perc <- round(resumo_carga$perc[1], 1)
+```
+
+
+
+O mapeamento funcional da amostra indica que a maior concentração de servidores respondentes encontra-se lotada no(a) **`r top_lotacao_nome`**, representando **`r top_lotacao_perc`%** (n = `r top_lotacao_n`) do total. No que tange ao regime de jornada de trabalho, observa-se a predominância do turno de **`r top_carga_nome`**, o qual engloba **`r top_carga_perc`%** (n = `r top_carga_n`) dos colaboradores. Compreender esta distribuição administrativa e temporal da força de trabalho é estratégico para o Plano de Logística Sustentável, pois permite mapear os horários de maior geração de viagens e identificar quais as gerências com maior potencial de envolvimento para a implementação de campanhas de eficiência energética no prédio-sede e mobilização para programas de caronas solidárias institucionais.
+
+
+
+
+\newpage
+## **Análise Bivariada de Dados**
+
+Para aprofundar a compreensão das escolhas de mobilidade, a Tabela a seguir apresenta o cruzamento descritivo entre as características sociodemográficas/funcionais dos servidores e o modal de transporte adotado. Os percentuais foram calculados por linha, evidenciando a distribuição de preferência de transporte dentro de cada segmento específico.
+
+
+
+
+```{r tabela-cruzada, warning=FALSE, message=FALSE, echo=FALSE}
+#| tbl-cap: "Distribuição Sociodemográfico e por Modal de Transporte dos Servidores do DETRAN-PA"
+
+library(gtsummary)
+library(kableExtra)
+library(tidyverse)
+library(lubridate)
+
+
+# 1. Preparação dos dados e Agrupamentos
+dados_cruzados <- dados %>%
+  mutate(
+    data_nasc = as.Date(data_de_nascimento),
+    idade = trunc((data_nasc %--% Sys.Date()) / years(1)),
+    faixa_etaria = case_when(
+      idade <= 30 ~ "Até 30 anos",
+      idade >= 31 & idade <= 40 ~ "31 a 40 anos",
+      idade >= 41 & idade <= 50 ~ "41 a 50 anos",
+      idade >= 51 & idade <= 60 ~ "51 a 60 anos",
+      idade > 60 ~ "Mais de 60 anos",
+      TRUE ~ "Não informado"
+    ),
+    transporte_agrupado = fct_lump_n(meio_de_transporte, n = 4, other_level = "Outros Modais"),
+    escolaridade_agrupada = fct_collapse(escolaridade,
+      "Pós-Graduação" = c("Pós-Graduação (Especialização/MBA) Completo", "Mestrado", "Doutorado"),
+      "Ensino Superior" = c("Ensino Superior Completo", "Ensino Superior Incompleto"),
+      "Até o Ensino Médio" = c("Ensino Médio Completo", "Ensino Médio Incompleto", "Ensino Fundamental Completo")
+    )
+  ) %>%
+  filter(!is.na(genero), genero != "Não informado", faixa_etaria != "Não informado")
+
+# 2. Geração da Tabela Cruzada com gtsummary e formatação avançada
+dados_cruzados %>%
+  select(genero, 
+         faixa_etaria, 
+         estado_civil, 
+         cor_raca, 
+         escolaridade_agrupada, 
+         carga_horaria, 
+         transporte_agrupado) %>%
+  tbl_summary(
+    by = transporte_agrupado, 
+    percent = "row",          
+    statistic = list(all_categorical() ~ "{n} ({p}%)"),
+    label = list(
+      genero ~ "Gênero",
+      faixa_etaria ~ "Faixa Etária",
+      estado_civil ~ "Estado Civil",
+      cor_raca ~ "Cor/Raça",
+      escolaridade_agrupada ~ "Escolaridade",
+      carga_horaria ~ "Carga Horária"
+    ),
+    missing_text = "Sem resposta"
+  ) %>%
+  add_overall(last = TRUE, col_label = "**TOTAL GERAL**") %>% 
+  modify_header(label = "**CARACTERÍSTICAS**") %>%
+  bold_labels() %>%
+  as_kable_extra(booktabs = TRUE, linesep = "") %>%
+  kable_styling(latex_options = c("striped", "HOLD_position", "scale_down"), full_width = FALSE, font_size = 11) %>%
+  # AJUSTE CHAVE: Trava a largura das colunas de transporte (2 a 7) forçando a quebra de linha natural
+  column_spec(2:7, width = "2.2cm")
+```
+
+
+
+
+```{r calc-inline-texto, include=FALSE}
+# Função para calcular o percentual
+calc_pct <- function(var_filtro, cat_filtro, modal) {
+  total_cat <- sum(dados_cruzados[[var_filtro]] == cat_filtro, na.rm = TRUE)
+  total_modal <- sum(dados_cruzados[[var_filtro]] == cat_filtro & dados_cruzados$transporte_agrupado == modal, na.rm = TRUE)
+  round((total_modal / total_cat) * 100, 1)
+}
+
+# Função para calcular a frequência absoluta (n)
+calc_n <- function(var_filtro, cat_filtro, modal) {
+  sum(dados_cruzados[[var_filtro]] == cat_filtro & dados_cruzados$transporte_agrupado == modal, na.rm = TRUE)
+}
+
+# --- CÁLCULOS: ESCOLARIDADE ---
+pct_pos_carro <- calc_pct("escolaridade_agrupada", "Pós-Graduação", "Carro Particular (sozinho)")
+n_pos_carro <- calc_n("escolaridade_agrupada", "Pós-Graduação", "Carro Particular (sozinho)")
+
+pct_sup_onibus <- calc_pct("escolaridade_agrupada", "Ensino Superior", "Van / Lotação / Ônibus")
+n_sup_onibus <- calc_n("escolaridade_agrupada", "Ensino Superior", "Van / Lotação / Ônibus")
+
+pct_med_onibus <- calc_pct("escolaridade_agrupada", "Até o Ensino Médio", "Van / Lotação / Ônibus")
+n_med_onibus <- calc_n("escolaridade_agrupada", "Até o Ensino Médio", "Van / Lotação / Ônibus")
+
+# --- CÁLCULOS: CARGA HORÁRIA ---
+pct_6h_onibus <- calc_pct("carga_horaria", "6 horas", "Van / Lotação / Ônibus")
+n_6h_onibus <- calc_n("carga_horaria", "6 horas", "Van / Lotação / Ônibus")
+
+pct_8h_carro <- calc_pct("carga_horaria", "8 horas", "Carro Particular (sozinho)")
+n_8h_carro <- calc_n("carga_horaria", "8 horas", "Carro Particular (sozinho)")
+
+# --- CÁLCULOS: FAIXA ETÁRIA ---
+pct_jov_onibus <- calc_pct("faixa_etaria", "Até 30 anos", "Van / Lotação / Ônibus")
+n_jov_onibus <- calc_n("faixa_etaria", "Até 30 anos", "Van / Lotação / Ônibus")
+
+pct_41a50_carro <- calc_pct("faixa_etaria", "41 a 50 anos", "Carro Particular (sozinho)")
+n_41a50_carro <- calc_n("faixa_etaria", "41 a 50 anos", "Carro Particular (sozinho)")
+
+```
+
+
+
+A análise bivariada revela nuances importantes no padrão de mobilidade do órgão, demonstrando que a dependência do transporte individual não é homogênea, mas sim atrelada a perfis específicos.
+
+O impacto do nível de instrução é o fator de maior contraste descritivo. Profissionais com **Pós-Graduação** apresentam a maior taxa de uso de veículos individuais, onde **`r pct_pos_carro`%** (n = `r n_pos_carro`) utilizam **Carro Particular (sozinho)**. Em contrapartida, a dependência do transporte coletivo (**Van / Lotação / Ônibus**) cresce inversamente à escolaridade, sendo o modal principal para **`r pct_sup_onibus`%** (n = `r n_sup_onibus`) dos servidores com **Ensino Superior** e esmagadores **`r pct_med_onibus`%** (n = `r n_med_onibus`) daqueles com escolaridade **Até o Ensino Médio**.
+
+No recorte funcional e geracional, nota-se uma distinção clara atrelada à jornada e à idade. Enquanto **`r pct_6h_onibus`%** (n = `r n_6h_onibus`) dos servidores com carga horária de **6 horas** e **`r pct_jov_onibus`%** (n = `r n_jov_onibus`) dos jovens (**Até 30 anos**) priorizam o transporte coletivo, o cenário inverte-se para os servidores com jornada de **8 horas** e na faixa etária de **41 a 50 anos**, onde o uso do **Carro Particular (sozinho)** domina com **`r pct_8h_carro`%** (n = `r n_8h_carro`) e **`r pct_41a50_carro`%** (n = `r n_41a50_carro`), respectivamente.
+
+Este panorama evidencia que o futuro Plano de Logística Sustentável deve adotar abordagens segmentadas. Campanhas de mobilidade ativa e estruturação de plataformas de carona solidária terão maior potencial de mitigação de Gases de Efeito Estufa (GEE) se direcionadas prioritariamente aos servidores de maior escolaridade, faixas etárias intermediárias e jornadas de 8 horas, que atualmente compõem o núcleo de maior dependência de veículos motorizados individuais da autarquia.
+
+
+
+
+
+```{r calc-inline-conclusao, include=FALSE}
+# CONSIDERAÇÕES FINAIS
+
+# Cálculos de proporção global para a conclusão
+total_respostas <- nrow(dados)
+
+# Acesso à internet
+pct_net_res <- round((sum(dados$internet_residencial == "Sim", na.rm = TRUE) / total_respostas) * 100, 1)
+pct_net_mov <- round((sum(dados$internet_celular == "Sim", na.rm = TRUE) / total_respostas) * 100, 1)
+```
+
+
+
+\newpage
+# **CONSIDERAÇÕES FINAIS**
+
+O diagnóstico apresentado neste relatório evidencia que o corpo funcional do DETRAN-PA possui características altamente favoráveis à implementação de um Plano de Logística Sustentável (PLS) inovador e baseado em evidências. O acesso quase universal à internet (residencial e móvel) configura um cenário ideal para a rápida adoção de plataformas digitais, sistemas *paperless* e campanhas de sensibilização ambiental de base tecnológica.
+
+Todavia, a análise descritiva de mobilidade revelou desafios estruturais segmentados. A forte dependência de combustíveis fósseis e o uso expressivo do veículo particular (sozinho) para os deslocamentos pendulares concentram-se em nichos específicos: servidores com maior grau de instrução (Pós-Graduação), faixas etárias intermediárias (41 a 50 anos) e submetidos a jornadas de 8 horas. Em contrapartida, os servidores mais jovens, com escolaridade até o Ensino Médio e jornada de 6 horas, representam a atual base de sustentação do uso do transporte coletivo.
+
+Face a este cenário, recomenda-se que as ações mitigatórias do PLS evitem abordagens genéricas e adotem estratégias direcionadas. A estruturação de um programa institucional de **Carona Solidária** e a criação de incentivos para modais partilhados terão um impacto de descarbonização muito superior se forem focados prioritariamente no público de maior dependência automotiva (jornada de 8h e nível superior/pós-graduação), que gera a maior pegada de carbono nos trajetos em direção à Sede.
+
+O DETRAN-PA, ao pautar as suas diretrizes de sustentabilidade num diagnóstico preciso de dados socioespaciais, transcende o mero cumprimento normativo e consolida a sua posição de vanguarda na gestão pública estadual, transformando a mobilidade dos seus próprios servidores num exemplo prático de eficiência e sustentabilidade urbana.
+
+
+
+
+\newpage
+# **REFERÊNCIAS BIBLIOGRÁFICAS**
+
+
+BANISTER, D. The sustainable mobility paradigm. **Transport Policy**, v. 15, n. 2, p. 73-80, 2008.
+
+CARVALHO, M.; SANTOS, L. Gestão de emissões em órgãos públicos: o impacto do deslocamento pendular e do teletrabalho no poder judiciário. **Revista de Administração Pública**, v. 55, n. 3, p. 580-595, 2021.
+
+COSTA, M. A.; SANTOS, R. F. Desafios e Práticas do Plano de Logística Sustentável no Setor Público Brasileiro. **Revista de Gestão Ambiental e Sustentabilidade**, v. 9, n. 1, p. 112-130, 2020.
+
+GOMES, P. C. Autarquias de Trânsito e o Desafio da Mobilidade Sustentável: teoria e prática no Brasil. **Revista Brasileira de Mobilidade Urbana**, v. 11, p. 112-128, 2023.
+
+GUIMARÃES, J. C. *et al.* Sustentabilidade na Administração Pública: Uma análise da implementação do Plano de Logística Sustentável (PLS). **Revista de Administração Pública**, v. 52, n. 4, p. 740-758, 2018.
+
+LITMAN, T. **Transportation Demand Management (TDM) Encyclopedia**. Victoria Transport Policy Institute, 2022. Disponível em: https://www.vtpi.org/tdm/.
+
+OLIVEIRA, A. L.; SILVA, C. R. Mobilidade Corporativa e Sustentabilidade Organizacional em Autarquias Federais e Estaduais. **Revista de Gestão e Projetos**, v. 14, n. 2, p. 89-107, 2023.
+
+SILVA, R. *et al.* Mobilidade urbana e logística sustentável: o caso de uma universidade federal brasileira. **Sustentabilidade em Debate**, v. 10, n. 1, p. 45-62, 2019.
+
+VASCONCELLOS, E. A. **Mobilidade urbana e cidadania**. Rio de Janeiro: Senac Nacional, 2012.
+
+
+
+
+
+
+
+
